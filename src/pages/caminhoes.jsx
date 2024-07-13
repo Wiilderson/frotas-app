@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import API from '../services/API';
+import ModalCaminhao from '../components/modalCaminhao';
+import eventEmitter from '../services/eventEmitter';
 
 function Caminhoes() {
   const [caminhoes, setCaminhoes] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const getCaminhoesByAPI = async () => {
     try {
       const response = await API.get('/caminhoes');
@@ -14,18 +17,31 @@ function Caminhoes() {
 
   useEffect(() => {
     getCaminhoesByAPI();
+    eventEmitter.on('updateTableTrucksByForms', getCaminhoesByAPI);
+    return () => {
+      eventEmitter.off('updateTableTrucksByForms', getCaminhoesByAPI);
+    };
   }, []);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
       <div className="w-full ps-button">
         <button
-          // onClick={handleOpenModal}
+          onClick={handleOpenModal}
           type="button"
           className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
         >
           Cadastrar caminhão
         </button>
+        {isModalOpen && <ModalCaminhao onClose={handleCloseModal} />}
       </div>
       <div className=" flex justify-center">
         <div className="w-9/12 overflow-x-auto shadow-md sm:rounded-lg">

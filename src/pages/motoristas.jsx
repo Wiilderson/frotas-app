@@ -1,8 +1,7 @@
-// import { useState } from 'react';
-// import Modal from '../components/modal';
-
 import { useEffect, useState } from 'react';
 import API from '../services/API';
+import ModalMotorista from '../components/modalMotorista';
+import eventEmitter from '../services/eventEmitter';
 
 function Motorista() {
   const [motoristas, setMotoristas] = useState([]);
@@ -18,26 +17,31 @@ function Motorista() {
 
   useEffect(() => {
     getMotoristasByAPI();
+    eventEmitter.on('updateTableDriverByForms', getMotoristasByAPI);
+    return () => {
+      eventEmitter.off('updateTableDriverByForms', getMotoristasByAPI);
+    };
   }, []);
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // const handleOpenModal = () => {
-  //   setIsModalOpen(true);
-  // };
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
 
-  // const handleCloseModal = () => {
-  //   setIsModalOpen(false);
-  // };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <>
       <div className="w-full ps-button">
         <button
-          // onClick={handleOpenModal}
+          onClick={handleOpenModal}
           type="button"
           className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
         >
           Cadastrar motorista
         </button>
+        {isModalOpen && <ModalMotorista onClose={handleCloseModal} />}
       </div>
       <div className=" flex justify-center">
         <div className="w-9/12 overflow-x-auto shadow-md sm:rounded-lg">
