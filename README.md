@@ -1,8 +1,27 @@
-# React + Vite
+# App controle de Frotas utilizando API
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SPA desenvolvida com react + vite consumindo e tratando dados vindos da API do [Frotas-API](https://frota-api.onrender.com/).
 
-Currently, two official plugins are available:
+## Iniciando com Servidor de Desenvolvimento
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+primeiro, faça a cópia ou baixe o repositório atráves git.
+
+```bash
+git clone https://github.com/Wiilderson/frotas-app.git
+```
+segundo, navegue até a pasta e faça a instalação das dependencias do ambiente DEV.
+
+```bash
+npm install 
+ # or
+yarn install
+```
+terceiro, após a instalação inicie o servidor de desenvolvimento. 
+```bash
+npm run dev
+```
+após a inicialização acesse com o endereço em qualquer navegador de sua preferência. 
+
+```bash
+http://localhost:5173
+```
